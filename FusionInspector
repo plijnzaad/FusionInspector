@@ -139,9 +139,11 @@ class FusionInspector:
 
         arg_parser.add_argument("--extract_fusion_reads_dir", default=None, type=str, help="directory to write fusion evidence reads in fastq format")
 
+        arg_parser.add_argument("--minigenome_max_intron_length", dest='minigenome_max_intron_length', required=False, type=int, default=1000, help="passed to fusion_pair_to_mini_genome_join.pl")
+
+        arg_parser.add_argument("--minigenome_flank_size", dest='minigenome_flank_size', required=False, type=int, default=1000, help="passed to fusion_pair_to_mini_genome_join.pl")
 
         args_parsed = arg_parser.parse_args()
-
 
         if not (args_parsed.left_fq_filename or args_parsed.samples_file):
             print("Error, must specify --left_fq or --samples_file", file=sys.stderr)
@@ -281,7 +283,8 @@ class FusionInspector:
                       " --fusions " + args_parsed.chim_summary_files +
                       " --gtf " + args_parsed.gtf_filename +
                       " --genome_fa " + args_parsed.genome_fasta_filename +
-                      " --shrink_introns --max_intron_length 1000 " +
+                      " --shrink_introns --max_intron_length  " + args_parsed.minigenome_max_intron_length +
+                      " --genome_flank " + args_parsed.minigenome_flank_size +
                       " --out_prefix " + os.sep.join([args_parsed.str_out_dir, args_parsed.out_prefix] ) )
         
         mergedContig_fasta_filename = os.sep.join([args_parsed.str_out_dir, args_parsed.out_prefix + ".fa"])
