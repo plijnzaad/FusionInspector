@@ -283,8 +283,9 @@ class FusionInspector:
                       " --fusions " + args_parsed.chim_summary_files +
                       " --gtf " + args_parsed.gtf_filename +
                       " --genome_fa " + args_parsed.genome_fasta_filename +
-                      " --shrink_introns --max_intron_length  " + args_parsed.minigenome_max_intron_length +
-                      " --genome_flank " + args_parsed.minigenome_flank_size +
+                      " --shrink_introns " +
+                      " --max_intron_length  " + str(args_parsed.minigenome_max_intron_length) +
+                      " --genome_flank " + str(args_parsed.minigenome_flank_size) +
                       " --out_prefix " + os.sep.join([args_parsed.str_out_dir, args_parsed.out_prefix] ) )
         
         mergedContig_fasta_filename = os.sep.join([args_parsed.str_out_dir, args_parsed.out_prefix + ".fa"])
