@@ -13,6 +13,7 @@ use Data::Dumper;
 
 my $max_intron_length = 500;
 my $genome_flank_size = 1000;
+my $interpair_sep=1000;
 
 my $usage = <<__EOUSAGE__;
 
@@ -33,6 +34,8 @@ my $usage = <<__EOUSAGE__;
 #  --max_intron_length <int>        default: max_intron_length  (only when --shrink_introns used)
 #
 #  --genome_flank <int>             amt. of genomic sequence to extract flanking each gene (default: $genome_flank_size)
+#
+#  --interpair_sep <int>            amt. by which to separate the fusion partners in the minigenome (default: $interpair_sep )
 #
 #  --out_prefix <string>            output prefix for output files (gtf and fasta) default: geneMergeContig.\${process_id}
 #
@@ -61,6 +64,7 @@ my $shrink_introns_flag = 0;
               'shrink_introns' => \$shrink_introns_flag,
               'max_intron_length=i' => \$max_intron_length,
               'genome_flank=i' => \$genome_flank_size,
+              'interpair_sep=i' => \$interpair_sep,
               
               'out_prefix=s' => \$out_prefix,
               
@@ -213,9 +217,9 @@ main: {
                 ($right_gene_supercontig_gtf, $right_gene_sequence_region) = &shrink_introns($right_gene_supercontig_gtf, $right_gene_sequence_region, $max_intron_length);
             }
 
-            my $supercontig = $left_gene_sequence_region . ("N" x 1000) . $right_gene_sequence_region;
+            my $supercontig = $left_gene_sequence_region . ("N" x $interpair_sep) . $right_gene_sequence_region;
             
-            $right_gene_supercontig_gtf = &adjust_gtf_coordinates($right_gene_supercontig_gtf, length($left_gene_sequence_region) + 1000);
+            $right_gene_supercontig_gtf = &adjust_gtf_coordinates($right_gene_supercontig_gtf, length($left_gene_sequence_region) + $interpair_sep);
             
             $supercontig =~ s/(\S{60})/$1\n/g; # make fasta 
             chomp $supercontig;

@@ -143,6 +143,8 @@ class FusionInspector:
 
         arg_parser.add_argument("--minigenome_flank_size", dest='minigenome_flank_size', required=False, type=int, default=1000, help="passed to fusion_pair_to_mini_genome_join.pl")
 
+        arg_parser.add_argument("--minigenome_interpair_sep", dest='minigenome_interpair_sep', required=False, type=int, default=1000, help="passed to fusion_pair_to_mini_genome_join.pl")
+
         args_parsed = arg_parser.parse_args()
 
         if not (args_parsed.left_fq_filename or args_parsed.samples_file):
@@ -286,6 +288,7 @@ class FusionInspector:
                       " --shrink_introns " +
                       " --max_intron_length  " + str(args_parsed.minigenome_max_intron_length) +
                       " --genome_flank " + str(args_parsed.minigenome_flank_size) +
+                      " --interpair_sep " + str(args_parsed.minigenome_interpair_sep) +
                       " --out_prefix " + os.sep.join([args_parsed.str_out_dir, args_parsed.out_prefix] ) )
         
         mergedContig_fasta_filename = os.sep.join([args_parsed.str_out_dir, args_parsed.out_prefix + ".fa"])
