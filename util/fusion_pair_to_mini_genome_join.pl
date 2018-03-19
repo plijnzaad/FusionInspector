@@ -46,6 +46,8 @@ __EOUSAGE__
 
     ;
 
+print STDERR "\n\n$0: arguments: ".join(" ", @ARGV) ."\n\n";
+
 my $help_flag;
 
 my $fusions_file;
